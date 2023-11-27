@@ -17,8 +17,8 @@ class Product(models.Model):
     pname = models.CharField(max_length=255, default='Unknown')
     size = models.CharField(max_length=5, default='M')
     Qty = models.IntegerField(default=1, null=True)
-    brand = models.ForeignKey('Brand', on_delete=models.PROTECT, null=True, blank=True)
-    section = models.ForeignKey('Section', on_delete=models.PROTECT)
+    brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, null=True, blank=True)
+    section = models.ForeignKey('Section', on_delete=models.SET_NULL,null=True,blank=True)
     discount = models.IntegerField(default=0)
     price=models.IntegerField(null=True)
     prod_pic = models.ImageField(null=True,blank=True)
@@ -72,7 +72,7 @@ class Order(models.Model):
         return f"Order ID: {self.Order_id} - Cart ID: {self.cart.Cart_id} - Status: {self.status}"
 
 class Wishlist(models.Model):
-    Wish_id = models.IntegerField(unique=True)
+    
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
 
@@ -94,3 +94,10 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Profile for {self.customer.cus_name}"
+    
+class Offer_Coupon(models.Model):
+    o_c_name = models.CharField(max_length=150)
+    discount = models.IntegerField(blank=True)
+    validity = models.DateField()
+    is_blocked =models.BooleanField(default=False)
+   

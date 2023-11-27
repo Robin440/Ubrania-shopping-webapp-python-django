@@ -63,7 +63,7 @@
             <div class="position-sticky pt-3 bg-dark">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link active" aria-current="page" href="{% url 'admin_dash' %}">
                             <span data-feather="home"></span>
                             Admin Dashboard
                         </a>
@@ -131,11 +131,36 @@
                                 <th scope="row " class="fst-italic">{{forloop.counter}}</th>
                                
                                 <td class="text-primary fw-bolder" >{{i.sectiontype}}</td>
-                                <td class="text-primary fw-bolder" ></td>
+                                <td class="text-primary fw-bolder" >
+                                    <div class="mb-3">
+                                    
+                                        {% if i.section_img %}
+                    
+                                       <img src="{{ i.section_img.url }}" class="img-thumbnail " alt="no image" style="height:15vh; width:15vh;">
+                                       <br>
+                                       <label for="producIMG" class="form-label">&nbsp;&nbsp;&nbsp;Image 1</label>
+                                       
+                                       <!-- <input multiple accept="" name="producIMG1" type="file" class="form-control mb-3" id="producIMG"> -->
+                                 
+                                       {% endif %}
+
+                                       {% if not i.section_img %}
+                   
+                                       <img src="" class="img-thumbnail " alt="No image" style="height:15vh; width:15vh;">
+                                       <br>
+                                       <label for="producIMG" class="form-label">&nbsp;&nbsp;&nbsp;Image 1</label>
+                                       
+                                       <!-- <input multiple accept="" name="producIMG1" type="file" class="form-control mb-3" id="producIMG"> -->
+                                  
+                                       {% endif %}
+             
+                                 </div>
+
+                                </td>
                                 <td class="text-primary fw-bolder">{{i.discount}}</td>
                                 <td>
-                                    <a href="#" class="btn btn-warning">Edit</a>
-                                    <a href="#" class="btn btn-danger">Remove</a>
+                                    <a href="{% url 'sect_edit' section_id=i.id %}" class="btn btn-warning">Edit</a>
+                                    <a href="{% url 'delete_sect' section_id=i.id %}" class="btn btn-danger">Remove</a>
                                 </td>
                               </tr>
                              {% endfor %}
@@ -168,12 +193,36 @@
                                     <th scope="row " class="fst-italic">{{forloop.counter}}</th>
                                  
                                     <td class="text-primary fw-bolder" >{{i.brand}}</td>
-                                    <td class="text-primary fw-bolder"></td>
+                                    <td class="text-primary fw-bolder">
+                                        <div class="mb-3">
+                                    
+                                            {% if i.brand_img %}
+                        
+                                           <img src="{{ i.brand_img.url }}" class="img-thumbnail " alt="no image" style="height:15vh; width:15vh;">
+                                           <br>
+                                           <label for="producIMG" class="form-label">&nbsp;&nbsp;&nbsp;Image 1</label>
+                                           
+                                           <!-- <input multiple accept="" name="producIMG1" type="file" class="form-control mb-3" id="producIMG"> -->
+                                     
+                                           {% endif %}
+    
+                                           {% if not i.brand_img %}
+                       
+                                           <img src="" class="img-thumbnail " alt="No image" style="height:15vh; width:15vh;">
+                                           <br>
+                                          
+                                           
+                                           <!-- <input multiple accept="" name="producIMG1" type="file" class="form-control mb-3" id="producIMG"> -->
+                                      
+                                           {% endif %}
+                 
+                                     </div>
+                                    </td>
                                     <td class="text-primary fw-bolder">{{i.discount}}</td>
                                    
                                     <td>
-                                        <a href="#" class="btn btn-warning">Edit</a>
-                                        <a href="#" class="btn btn-danger">Remove</a>
+                                        <a href="{% url 'brand_edit' brand_id=i.id %}" class="btn btn-warning">Edit</a>
+                                        <a href="{% url 'delete_brand' brand_id=i.id %}" class="btn btn-danger">Remove</a>
                                     </td>
                                   </tr>
                                {% endfor %}

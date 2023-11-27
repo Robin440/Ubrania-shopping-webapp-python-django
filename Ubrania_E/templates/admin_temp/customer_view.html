@@ -42,7 +42,7 @@
     
 <header class="navbar navbar-success sticky-top bg-success flex-md-nowrap p-0 shadow">
   <div class="header__logo">
-    <a href="./index.html"   ><img style="height: 15vh;" src="{% static 'img/Ubrania-logos_transparent911.png' %}" alt=""></a>
+    <a href="./index.html"   ><img style="height: 10vh;" src="{% static 'img/Ubrania-logos_transparent911.png' %}" alt=""></a>
 </div>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
   
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">Sign out</a>
+      <a class="nav-link px-3" href="#"></a>
     </div>
   </div>
 </header>
@@ -61,7 +61,7 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
+            <a class="nav-link active" aria-current="page" href="{% url 'admin_dash' %}">
               <span data-feather="home"></span>
              Admin Dashboard
             </a>
@@ -87,7 +87,7 @@
                     <ul class="list-group">
                     
                       <li class="list-group-item "> <a class="text-warning" style="text-decoration:none" href="">View Customer</a></li>
-                      <li class="list-group-item "> <a class="text-warning" style="text-decoration:none" href="">Udate Customer</a></li>
+
                       
                     </ul>
                   </div>
@@ -130,6 +130,7 @@
             <th scope="col">D.O.B</th>
             <th scope="col">Joined Date</th>
             <th scope="col">Active</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -144,6 +145,16 @@
             <td>{{i.dob}}</td>
             <td>{{i.date_joined}}</td>
             <td>{{i.is_active}}</td>
+            <td class="d-flex justify-content-evenly">
+              <a href="{% url 'edit_cust' customer_id=i.id %}" class="btn btn-success align-middle ">Edit</a>
+              {% if not i.is_blocked %}
+              <a href="{% url 'block_cust' customer_id=i.id %}" class="btn btn-warning align-middle ">Block</a>
+              {% endif %}
+              {% if i.is_blocked %}
+              <a href="{% url 'unblock_cust' customer_id=i.id %}" class="btn btn-info align-middle">Unblock</a>
+              {% endif %}
+              <a href="{% url 'del_cust' customer_id=i.id %}" class="btn btn-danger align-middle">Remove</a>
+          </td>
           </tr>
           {% endfor %}
     

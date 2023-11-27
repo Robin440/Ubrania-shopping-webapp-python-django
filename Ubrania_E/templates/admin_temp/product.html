@@ -65,7 +65,7 @@
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link active" aria-current="page" href="{% url 'admin_dash' %}">
                             <span data-feather="home"></span>
                             Admin Dashboard
                         </a>
@@ -181,7 +181,7 @@
                                         <td class="align-middle ">
                                             <a href="{% url 'edit_prod' product_id=i.id %}" class="btn btn-warning align-middle">Edit</a>
 
-                                            <a href="#" class="btn btn-danger align-middle">Remove</a>
+                                            <a href="{% url 'delete_prod' product_id=i.id %}" class="btn btn-danger align-middle">Remove</a>
                                         </td>
                                     </tr>
                                     {% endfor %}

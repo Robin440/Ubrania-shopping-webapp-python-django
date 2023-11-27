@@ -12,10 +12,12 @@ from Customer.models import Customer
 from .models import Customer
 from U_Admin.models import *
 from Customer import views
-
+from django.views.decorators.cache import never_cache
 
 
 def fresh_page(request):
+    if 'username' in request.session:
+        return redirect(user_home_py)
     hi = 'jfgdsf'
     brand_data = Brand.objects.all()
     return render(request, 'index.html', {'brands': brand_data})
@@ -48,28 +50,40 @@ def fresh_page(request):
 
 
 
+@never_cache
 def user_home_py(request):
-
-    if 'username' in request.session:
-
-        brand_data = Brand.objects.all()
-        prod_data = Product.objects.all()
-        sec = Section.objects.all()
-
-        first_name = request.session.get('username','Guest')
     
-        return render(request,'user_home.html', {'brands': brand_data,'tst':first_name,'product':prod_data,'sect_data':sec})
+    if 'username' in request.session:
+        username = request.session.get('username', 'Guest')
+        
+        # Retrieve the user instance from the database
+        user = Customer.objects.get(username=username)
+
+        # Check if the user is blocked
+        if not user.is_blocked:
+            brand_data = Brand.objects.all()
+            prod_data = Product.objects.all()
+            sec = Section.objects.all()
+
+            return render(request, 'user_home.html', {'brands': brand_data, 'tst': username, 'product': prod_data, 'sect_data': sec})
+        else:
+            # Add a message indicating that the user is blocked
+            messages.error(request, 'Your account is blocked.')
+
+    # If the username is not in the session or the user is blocked, redirect to login
     return redirect(user_login_py)
 
-
+@never_cache
 def user_logout_py(request):
     request.session.flush()
     logout(request)
     return render(request,'index.html')
 
 
-
+@never_cache
 def user_register_py(request):
+    if 'username' in request.session:
+        return redirect(user_home_py)
     if request.method == 'POST':
         f_name = request.POST.get('first_name')
         l_name = request.POST.get('last_name')
@@ -98,19 +112,34 @@ def user_register_py(request):
 
 
 
+from django.core.exceptions import ObjectDoesNotExist
+
+# views.py
+
+@never_cache
 def user_login_py(request):
+    if 'username' in request.session:
+        return redirect(user_home_py)
     if request.method == 'POST':
         username = request.POST.get('name_or_email')
         password = request.POST.get('password')
-        user = Customer.objects.get(Q(username=username) | Q(email=username), password=password)
-        if user is not None:
-            request.session['username']=username
-            messages.success(request, 'Login successful.')
+
+        try:
+            user = Customer.objects.get(Q(username=username) | Q(email=username), password=password)
+
+            # Check if the user is blocked
+            if user.is_blocked:
+                messages.error(request, 'Your account is blocked. Contact support for assistance.')
+                return render(request, 'user_login.html')
+
+            # If not blocked, set session data and redirect
+            request.session['username'] = username
+            messages.success(request, '')
             brand_data = Brand.objects.all()
             return redirect(user_home_py)
-        else:
-            messages.error(request,'Invalid Credentials')
-          # Replace with your post-login page
-        # messages.error(request, 'Password or username is wrong.')
+
+        except ObjectDoesNotExist:
+            messages.error(request, 'Invalid Credentials')
+            return render(request, 'user_login.html')
 
     return render(request, 'user_login.html')

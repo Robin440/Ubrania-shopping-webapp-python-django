@@ -65,7 +65,7 @@
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                        <a class="nav-link active" aria-current="page" href="{% url 'admin_dash' %}">
                             <span data-feather="home"></span>
                             Admin Dashboard
                         </a>
@@ -129,7 +129,8 @@
                           
                            
 
-                            <form method="POST" action="{% url 'prod_update' %}" enctype="multipart/form-data" >
+                            <form method="POST" action="{% url 'edit_prod' product_id=prod_data.id %}" enctype="multipart/form-data">
+
                                 {% csrf_token %}
                 
                                 <div class="mb-3">
@@ -140,7 +141,7 @@
                                 <label for="producIMG" class="form-label fw-bold">Product Image</label>
                                 <div class="mb-3">
                                     
-                                    {% if prod_data.prod_pic %}
+                                                             {% if prod_data.prod_pic %}
                                          
                                                             <img src="{{ prod_data.prod_pic.url }}" class="img-thumbnail " alt="no image" style="height:15vh; width:15vh;">
                                                             <br>

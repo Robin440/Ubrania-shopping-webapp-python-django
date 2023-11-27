@@ -175,6 +175,12 @@
 
                        <form action="{% url 'user_login' %}" method="post">
                         {% csrf_token %}
+
+                        {% if messages %}
+                        {% for i in messages %}
+                        {{i}}
+                        {% endfor %}
+                        {% endif %}
                         <div class="form-group">
                             <input type="text" name="name_or_email" class="form-control" placeholder="Name or Email" required>
                         </div>

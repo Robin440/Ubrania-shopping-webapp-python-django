@@ -42,7 +42,7 @@
     
 <header class="navbar navbar-success sticky-top bg-success flex-md-nowrap p-0 shadow">
   <div class="header__logo">
-    <a href="./index.html"   ><img style="height: 15vh;" src="{% static 'img/Ubrania-logos_transparent911.png' %}" alt=""></a>
+    <a href="./index.html"   ><img style="height: 10vh;" src="{% static 'img/Ubrania-logos_transparent911.png' %}" alt=""></a>
 </div>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
   
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="#">Sign out</a>
+      <a class="nav-link px-3" href="#"></a>
     </div>
   </div>
 </header>
@@ -96,7 +96,7 @@
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    <span data-feather="users"></span>&nbsp;
+                    <span data-feather="layers"></span>&nbsp;
                         <strong class="text-danger" >Product Management</strong> 
                   </button>
                 </h2>
@@ -114,12 +114,18 @@
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Accordion Item #3
+                    <span data-feather="layers"></span>&nbsp;
+                    <strong class="text-danger" > Offers and Coupons </strong> 
                   </button>
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                   <div class="accordion-body">
-                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    <ul class="list-group">
+                    
+                      <li class="list-group-item "> <a class="text-warning" style="text-decoration:none" href="{% url 'o&c_view' %}">View Offers and Coupons </a></li>
+                      <li class="list-group-item "> <a class="text-warning" style="text-decoration:none" href="{% url 'oc_update'  %}">Update Offers and Coupons </a></li>
+                    
+                    </ul>
                   </div>
                 </div>
               </div>
